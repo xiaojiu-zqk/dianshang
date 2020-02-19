@@ -4,6 +4,7 @@ import android.util.Log;
 
 
 import com.example.shopping.common.Constant;
+import com.example.shopping.models.api.CategroylistApi;
 import com.example.shopping.models.api.PinpaiApi;
 import com.example.shopping.models.api.ShouyeApi;
 import com.example.shopping.models.api.WanApi;
@@ -39,6 +40,7 @@ public class HttpManager {
     private WanApi wanApi; //wanandroid接口
     private static ShouyeApi shouyeApi;
     private static PinpaiApi pinpaiApi;
+    private static CategroylistApi categroylistApi;
 
 
 
@@ -115,6 +117,16 @@ public class HttpManager {
             }
         }
         return pinpaiApi;
+    }
+    public static CategroylistApi getCategroylistApii(){
+        synchronized (HttpManager.class){
+            if(categroylistApi == null){
+                synchronized (HttpManager.class){
+                    categroylistApi = getServerApis(Constant.Base_shopping_url,CategroylistApi.class);
+                }
+            }
+        }
+        return categroylistApi;
     }
 
     /**

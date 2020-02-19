@@ -12,6 +12,7 @@ public class Constant {
     public static final String Base_shopping_url = "https://cdwan.cn/";
 
 
+
     //网络缓存的地址
     public static final String PATH_DATA = MyApp.myApp.getCacheDir().getAbsolutePath() + File.separator + "data";
 
