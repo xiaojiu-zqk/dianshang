@@ -15,5 +15,13 @@
         android:id="@+id/navigation_fenlei"
         android:icon="@drawable/ic_sort_selector"
         android:title="@string/title_fenlei" />
+    <item
+        android:id="@+id/navigation_shopping"
+        android:icon="@drawable/ic_shoping_selector"
+        android:title="@string/title_shopping" />
+    <item
+        android:id="@+id/navigation_mine"
+        android:icon="@drawable/ic_me_selector"
+        android:title="@string/title_mine" />
 
 </menu>

@@ -19,7 +19,17 @@
 
     <fragment
         android:id="@+id/navigation_fenlei"
-        android:name="com.example.shopping.ui.notifications.NotificationsFragment"
+        android:name="com.example.shopping.ui.fenlei.FenleiFragment"
         android:label="@string/title_fenlei"
         tools:layout="@layout/fragment_fenlei" />
+    <fragment
+        android:id="@+id/navigation_shopping"
+        android:name="com.example.shopping.ui.shopping.ShoppingFragment"
+        android:label="@string/title_shopping"
+        tools:layout="@layout/fragment_shopping" />
+    <fragment
+        android:id="@+id/navigation_mine"
+        android:name="com.example.shopping.ui.mine.MineFragment"
+        android:label="@string/title_mine"
+        tools:layout="@layout/fragment_mine" />
 </navigation>

@@ -34,7 +34,7 @@ public class ZhuantiFragment extends BaseFragment<ZhuantiContract.Persenter> imp
     protected void initView() {
         rvZhuanti.setLayoutManager(new LinearLayoutManager(context));
         dataBeans = new ArrayList<>();
-        adapter = new ZhuantiAdapter(context,dataBeans);
+        adapter = new ZhuantiAdapter(dataBeans,context);
         rvZhuanti.setAdapter(adapter);
     }
 

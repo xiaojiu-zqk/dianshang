@@ -1,4 +1,4 @@
-package com.example.shopping.ui.notifications;
+package com.example.shopping.ui.fenlei;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

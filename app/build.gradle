@@ -32,6 +32,7 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment:2.2.1'
     implementation 'androidx.navigation:navigation-ui:2.2.1'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
@@ -67,7 +68,6 @@ dependencies {
 // 必要rxjava2依赖   // 必要rxandrroid依赖，切线程时需要用到
 
 
-
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
 
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0' // 必要依赖，解析json字符所用
@@ -81,14 +81,6 @@ dependencies {
 //butterknife
     implementation 'com.jakewharton:butterknife:10.0.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
-
-
-
-
-
-
-
-
 
 
 }
