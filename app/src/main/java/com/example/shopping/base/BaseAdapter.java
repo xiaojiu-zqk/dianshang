@@ -68,6 +68,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter {
         notifyDataSetChanged();
     }
 
+
     public abstract int getLayout();
 
     //hodler是对应的item的管理的，T当前item所对应的数据

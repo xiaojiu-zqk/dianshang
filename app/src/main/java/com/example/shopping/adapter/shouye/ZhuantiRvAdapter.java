@@ -31,7 +31,7 @@ public class ZhuantiRvAdapter extends BaseAdapter {
         ImageView img = (ImageView) holder.getView(R.id.img_zhuanti);
         TextView title = (TextView) holder.getView(R.id.titlezhuanti);
         Glide.with(mContext).load(topicListBean.getScene_pic_url()).into(img);
-        title.setText("222222222222222");
+        title.setText(topicListBean.getTitle());
         Log.i(TAG, "bindData: "+topicListBean.getTitle());
     }
 }

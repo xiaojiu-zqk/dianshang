@@ -4,6 +4,7 @@ import android.util.Log;
 
 
 import com.example.shopping.common.Constant;
+import com.example.shopping.models.api.PinpaiApi;
 import com.example.shopping.models.api.ShouyeApi;
 import com.example.shopping.models.api.WanApi;
 import com.example.shopping.utils.SystemUtils;
@@ -37,6 +38,7 @@ public class HttpManager {
 
     private WanApi wanApi; //wanandroid接口
     private static ShouyeApi shouyeApi;
+    private static PinpaiApi pinpaiApi;
 
 
 
@@ -103,6 +105,16 @@ public class HttpManager {
             }
         }
         return shouyeApi;
+    }
+    public static PinpaiApi getPinpaiApi(){
+        synchronized (HttpManager.class){
+            if(pinpaiApi == null){
+                synchronized (HttpManager.class){
+                    pinpaiApi = getServerApis(Constant.Base_shopping_url,PinpaiApi.class);
+                }
+            }
+        }
+        return pinpaiApi;
     }
 
     /**
