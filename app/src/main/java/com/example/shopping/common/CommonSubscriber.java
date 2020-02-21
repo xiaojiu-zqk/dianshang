@@ -1,6 +1,5 @@
 package com.example.shopping.common;
 
-import android.text.TextUtils;
 
 
 import com.example.shopping.interfaces.IBaseView;

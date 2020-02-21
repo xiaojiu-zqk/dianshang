@@ -4,6 +4,7 @@ import android.util.Log;
 
 
 import com.example.shopping.common.Constant;
+import com.example.shopping.models.api.CategroyDetailApi;
 import com.example.shopping.models.api.CategroylistApi;
 import com.example.shopping.models.api.PinpaiApi;
 import com.example.shopping.models.api.ShouyeApi;
@@ -41,6 +42,7 @@ public class HttpManager {
     private static ShouyeApi shouyeApi;
     private static PinpaiApi pinpaiApi;
     private static CategroylistApi categroylistApi;
+    private static CategroyDetailApi categroyDetailApi;
 
 
 
@@ -118,6 +120,7 @@ public class HttpManager {
         }
         return pinpaiApi;
     }
+
     public static CategroylistApi getCategroylistApii(){
         synchronized (HttpManager.class){
             if(categroylistApi == null){
@@ -127,7 +130,17 @@ public class HttpManager {
             }
         }
         return categroylistApi;
+    }public static CategroyDetailApi getCategroyDetailApi(){
+        synchronized (HttpManager.class){
+            if(categroyDetailApi == null){
+                synchronized (HttpManager.class){
+                    categroyDetailApi = getServerApis(Constant.Base_shopping_url,CategroyDetailApi.class);
+                }
+            }
+        }
+        return categroyDetailApi;
     }
+
 
     /**
      * 获取商城的接口

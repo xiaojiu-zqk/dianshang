@@ -1,6 +1,7 @@
 package com.example.shopping.ui.fenlei;
 
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.text.TextUtils;
 import android.widget.ImageView;
@@ -12,7 +13,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.shopping.R;
 import com.example.shopping.adapter.CategroyAdapter;
+import com.example.shopping.base.BaseAdapter;
 import com.example.shopping.base.BaseFragment;
+import com.example.shopping.details.CategroyDetailActivity;
 import com.example.shopping.interfaces.shangcheng.CategroyListContract;
 import com.example.shopping.models.bean.CategroyCommunityBean;
 import com.example.shopping.models.bean.CategroyListBean;
@@ -30,7 +33,7 @@ import q.rorbin.verticaltablayout.widget.QTabView;
 import q.rorbin.verticaltablayout.widget.TabView;
 
 
-public class FenleiFragment extends BaseFragment<CategroyListContract.Persenter> implements CategroyListContract.View, VerticalTabLayout.OnTabSelectedListener {
+public class FenleiFragment extends BaseFragment<CategroyListContract.Persenter> implements CategroyListContract.View, VerticalTabLayout.OnTabSelectedListener,CategroyAdapter.ItemClickHandler {
 
 
     @BindView(R.id.verticalTab)
@@ -59,6 +62,7 @@ public class FenleiFragment extends BaseFragment<CategroyListContract.Persenter>
     protected void initView() {
         titles = new ArrayList<>();
         verticalTab.addOnTabSelectedListener(this);
+        //tablayout的适配器
         tabAdapter = new TabAdapter() {
             @Override
             public int getCount() {
@@ -97,6 +101,9 @@ public class FenleiFragment extends BaseFragment<CategroyListContract.Persenter>
         });
         categroyAdapter = new CategroyAdapter(beans, context);
         rvCategroy.setAdapter(categroyAdapter);
+        rvCategroy.setNestedScrollingEnabled(false);
+        //recycleview的点击事件
+        categroyAdapter.setOnItemClickHandler(this);
 
     }
 
@@ -115,11 +122,11 @@ public class FenleiFragment extends BaseFragment<CategroyListContract.Persenter>
         categoryList = result.getData().getCategoryList();
        updateInfo(result.getData().getCurrentCategory().getWap_banner_url(),result.getData().getCurrentCategory().getFront_desc(),
                result.getData().getCurrentCategory().getName());
-
+    //设置tablayout数据
         for (CategroyListBean.DataBean.CategoryListBean categoryListBean : categoryList) {
             titles.add(categoryListBean.getName());
         }
-
+    //设置第一个tabitem列表数据
         for (CategroyListBean.DataBean.CurrentCategoryBean.SubCategoryListBean subCategoryListBean : result.getData().getCurrentCategory().getSubCategoryList()) {
             CategroyCommunityBean categroyCommunityBean = new CategroyCommunityBean();
             categroyCommunityBean.id = subCategoryListBean.getId();
@@ -128,14 +135,17 @@ public class FenleiFragment extends BaseFragment<CategroyListContract.Persenter>
             beans.add(categroyCommunityBean);
         }
         categroyAdapter.notifyDataSetChanged();
+        //tablayout设置适配器
         verticalTab.setTabAdapter(tabAdapter);
     }
 
     @Override
     public void getCurrentCategroyReturn(CurrentCategoryRvBean result) {
         beans.clear();
+        //设置数据
         updateInfo(result.getData().getCurrentCategory().getWap_banner_url(),result.getData().getCurrentCategory().getFront_desc(),
                 result.getData().getCurrentCategory().getName());
+
         List<CurrentCategoryRvBean.DataBean.CurrentCategoryBean.SubCategoryListBean> subCategoryList = result.getData().getCurrentCategory().getSubCategoryList();
         for (CurrentCategoryRvBean.DataBean.CurrentCategoryBean.SubCategoryListBean subCategoryListBean : subCategoryList) {
             CategroyCommunityBean categroyCommunityBean = new CategroyCommunityBean();
@@ -154,9 +164,11 @@ public class FenleiFragment extends BaseFragment<CategroyListContract.Persenter>
         nameCategroy.setText(des);
         desccategroy.setText(title+"分类");
     }
+    //tablayout的点击事件
     @Override
     public void onTabSelected(TabView tab, int position) {
         if (categoryList !=null){
+            //请求列表数据
             int id = categoryList.get(position).getId();
             persenter.getCurrentCategroy(id);
         }
@@ -165,5 +177,12 @@ public class FenleiFragment extends BaseFragment<CategroyListContract.Persenter>
     @Override
     public void onTabReselected(TabView tab, int position) {
 
+    }
+
+    @Override
+    public void itemClick(int position, BaseAdapter.BaseViewHolder holder) {
+        Intent intent = new Intent(context, CategroyDetailActivity.class);
+        intent.putExtra("id",beans.get(position).getId());
+        startActivity(intent);
     }
 }
