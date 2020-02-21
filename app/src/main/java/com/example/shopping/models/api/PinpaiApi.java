@@ -13,6 +13,6 @@ public interface PinpaiApi {
     Flowable<PinpaiDetailsBean> getZhuantiData(@Query("id") int id);
 
     @GET("api/goods/list")
-    Flowable<GoodListBean> getGoodListData(@Query("id") int id,@Query("page") int page,@Query("size") int size);
+    Flowable<GoodListBean> getGoodListData(@Query("brandId") int id,@Query("page") int page,@Query("size") int size);
 }
 

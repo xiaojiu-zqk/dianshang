@@ -33,6 +33,7 @@ public class CategroyDetailActivity extends BaseActivity<CategroyDetailContract.
     RecyclerView rvCetegroyDetail;
     private ArrayList<CateGroyDetailRvBean.DataBeanX.DataBean> dataBeans;
     private CategroyDetailAdaper categroyDetailAdaper;
+    private List<CategroyDetailTabBean.DataBean.BrotherCategoryBean> beans;
 
     @Override
     protected int getLayout() {
@@ -65,6 +66,8 @@ public class CategroyDetailActivity extends BaseActivity<CategroyDetailContract.
     @Override
     public void getCategroyDetailTabReturn(CategroyDetailTabBean result) {
         int posi = 0;
+        beans = result.getData().getBrotherCategory();
+
         nameCategroyDetail.setText(result.getData().getCurrentCategory().getName());
         froatnameCategroyDetail.setText(result.getData().getCurrentCategory().getFront_name());
         List<CategroyDetailTabBean.DataBean.BrotherCategoryBean> brotherCategory = result.getData().getBrotherCategory();
@@ -72,7 +75,7 @@ public class CategroyDetailActivity extends BaseActivity<CategroyDetailContract.
             TabLayout.Tab tab = tabCategroyDetail.newTab();
             tab.setText(brotherCategory.get(i).getName());
             //设置标识  获取请求商品列表数据是的id
-            tab.setTag(result.getData().getCurrentCategory().getId());
+            tab.setTag(brotherCategory.get(i).getId());
             tabCategroyDetail.addTab(tab);
 
             //判断id是否一样  一样获取当前tabitem的下标
@@ -95,6 +98,9 @@ public class CategroyDetailActivity extends BaseActivity<CategroyDetailContract.
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
         int id  = (int) tab.getTag();
+        CategroyDetailTabBean.DataBean.BrotherCategoryBean brotherCategoryBean = beans.get(tab.getPosition());
+        nameCategroyDetail.setText(brotherCategoryBean.getName());
+        froatnameCategroyDetail.setText(brotherCategoryBean.getFront_name());
         //请求列表数据
         persenter.getCategroyDetailRv(id,1,100);
     }

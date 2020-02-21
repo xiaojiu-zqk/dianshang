@@ -12,6 +12,6 @@ public interface CategroyDetailApi {
     Flowable<CategroyDetailTabBean> getCategroyDetailTab(@Query("id") int id);
 
     @GET("api/goods/list")
-    Flowable<CateGroyDetailRvBean> getCategroyDetailRv(@Query("id") int id, @Query("page") int page, @Query("size") int size);
+    Flowable<CateGroyDetailRvBean> getCategroyDetailRv(@Query("categoryId") int id, @Query("page") int page, @Query("size") int size);
 
 }
