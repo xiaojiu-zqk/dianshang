@@ -98,6 +98,7 @@ public class CategroyDetailActivity extends BaseActivity<CategroyDetailContract.
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
         int id  = (int) tab.getTag();
+        //更新textview的数据
         CategroyDetailTabBean.DataBean.BrotherCategoryBean brotherCategoryBean = beans.get(tab.getPosition());
         nameCategroyDetail.setText(brotherCategoryBean.getName());
         froatnameCategroyDetail.setText(brotherCategoryBean.getFront_name());
