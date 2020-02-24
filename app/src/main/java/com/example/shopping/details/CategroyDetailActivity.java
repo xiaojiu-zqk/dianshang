@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.shopping.R;
 import com.example.shopping.adapter.details.CategroyDetailAdaper;
 import com.example.shopping.base.BaseActivity;
+import com.example.shopping.base.BaseAdapter;
 import com.example.shopping.interfaces.shangcheng.details.CategroyDetailContract;
 import com.example.shopping.models.bean.CateGroyDetailRvBean;
 import com.example.shopping.models.bean.CategroyDetailTabBean;
@@ -22,7 +23,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class CategroyDetailActivity extends BaseActivity<CategroyDetailContract.Persenter> implements CategroyDetailContract.View,TabLayout.OnTabSelectedListener {
+public class CategroyDetailActivity extends BaseActivity<CategroyDetailContract.Persenter> implements CategroyDetailContract.View,TabLayout.OnTabSelectedListener, BaseAdapter.ItemClickHandler {
     @BindView(R.id.tab_categroy_detail)
     TabLayout tabCategroyDetail;
     @BindView(R.id.name_categroy_detail)
@@ -34,6 +35,7 @@ public class CategroyDetailActivity extends BaseActivity<CategroyDetailContract.
     private ArrayList<CateGroyDetailRvBean.DataBeanX.DataBean> dataBeans;
     private CategroyDetailAdaper categroyDetailAdaper;
     private List<CategroyDetailTabBean.DataBean.BrotherCategoryBean> beans;
+    private List<CateGroyDetailRvBean.DataBeanX.DataBean> data;
 
     @Override
     protected int getLayout() {
@@ -48,6 +50,7 @@ public class CategroyDetailActivity extends BaseActivity<CategroyDetailContract.
         rvCetegroyDetail.setLayoutManager(new GridLayoutManager(this,2));
         categroyDetailAdaper = new CategroyDetailAdaper(dataBeans, this);
         rvCetegroyDetail.setAdapter(categroyDetailAdaper);
+        categroyDetailAdaper.setOnItemClickHandler(this);
 
     }
 
@@ -92,6 +95,7 @@ public class CategroyDetailActivity extends BaseActivity<CategroyDetailContract.
 
     @Override
     public void getCategroyDetailRvReturn(CateGroyDetailRvBean result) {
+        data = result.getData().getData();
         categroyDetailAdaper.updata(result.getData().getData());
     }
 
@@ -114,5 +118,12 @@ public class CategroyDetailActivity extends BaseActivity<CategroyDetailContract.
     @Override
     public void onTabReselected(TabLayout.Tab tab) {
 
+    }
+
+    @Override
+    public void itemClick(int position, BaseAdapter.BaseViewHolder holder) {
+        CateGroyDetailRvBean.DataBeanX.DataBean dataBean = data.get(position);
+        int id = dataBean.getId();
+//        new Intent(this,)
     }
 }

@@ -3,6 +3,7 @@ package com.example.shopping.ui.home;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,6 +25,7 @@ import com.example.shopping.adapter.shouye.XinpinRvAdapter;
 import com.example.shopping.adapter.shouye.ZhuantiRvAdapter;
 import com.example.shopping.base.BaseAdapter;
 import com.example.shopping.base.BaseFragment;
+import com.example.shopping.details.BrandListActivity;
 import com.example.shopping.details.PinpaiDetailsActivity;
 import com.example.shopping.interfaces.shangcheng.ShouyeContract;
 import com.example.shopping.models.bean.ShouYeBean;
@@ -37,7 +39,7 @@ import java.util.List;
 
 import butterknife.BindView;
 
-public class HomeFragment extends BaseFragment<ShouyeContract.Persenter> implements ShouyeContract.View {
+public class HomeFragment extends BaseFragment<ShouyeContract.Persenter> implements ShouyeContract.View, View.OnClickListener {
 
     @BindView(R.id.banner_shouye)
     Banner bannerShouye;
@@ -95,6 +97,10 @@ public class HomeFragment extends BaseFragment<ShouyeContract.Persenter> impleme
         adapter = new ShouyeAdapter(getActivity().getSupportFragmentManager(), tabString, fragments);
         vpShouye.setAdapter(adapter);
         tabShouye.setupWithViewPager(vpShouye);
+        tv1Shouye.setOnClickListener(this);
+        tv2Shouye.setOnClickListener(this);
+        tv3Shouye.setOnClickListener(this);
+        tv4Shouye.setOnClickListener(this);
         pinpai();
         xinpin();
         renqi();
@@ -255,5 +261,21 @@ public class HomeFragment extends BaseFragment<ShouyeContract.Persenter> impleme
                         Glide.with(context).load(path).into(imageView);
                     }
                 }).start();
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.tv1_shouye:
+                Intent intent = new Intent(context, BrandListActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.tv2_shouye:
+                break;
+            case R.id.tv3_shouye:
+                break;
+            case R.id.tv4_shouye:
+                break;
+        }
     }
 }
