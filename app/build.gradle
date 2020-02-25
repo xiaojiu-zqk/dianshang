@@ -83,5 +83,8 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
     implementation 'q.rorbin:VerticalTabLayout:1.2.5'
 
-
+//默认的1.0.0webview无法使用，所有1.1.0-bete01
+    configurations.all {
+        resolutionStrategy.force 'androidx.appcompat:appcompat:1.1.0-beta01'
+    }
 }

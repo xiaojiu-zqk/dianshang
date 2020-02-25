@@ -18,6 +18,7 @@ import com.bumptech.glide.Glide;
 import com.example.shopping.R;
 import com.example.shopping.adapter.details.NewHotAdapter;
 import com.example.shopping.base.BaseActivity;
+import com.example.shopping.base.BaseAdapter;
 import com.example.shopping.interfaces.shangcheng.ShouyeContract;
 import com.example.shopping.models.bean.BannerInfoTopBean;
 import com.example.shopping.models.bean.NewDataBean;
@@ -64,11 +65,24 @@ public class NewHotActivity extends BaseActivity<ShouyeContract.NewHotPersenter>
             newAdapter = new NewHotAdapter(newList, this);
             newAdapter.tag = 1;
             rvNewHot.setAdapter(newAdapter);
+            newAdapter.setOnItemClickHandler(new BaseAdapter.ItemClickHandler() {
+                @Override
+                public void itemClick(int position, BaseAdapter.BaseViewHolder holder) {
+                    Intent intent1 = new Intent(NewHotActivity.this, NewHotDetailActivity.class);
+                    startActivity(intent1);
+                }
+            });
         } else {
             hotList = new ArrayList<>();
             hotAdapter = new NewHotAdapter(hotList, this);
             hotAdapter.tag = 2;
             rvNewHot.setAdapter(hotAdapter);
+            hotAdapter.setOnItemClickHandler(new BaseAdapter.ItemClickHandler() {
+                @Override
+                public void itemClick(int position, BaseAdapter.BaseViewHolder holder) {
+
+                }
+            });
         }
         zongheNewHot.setOnClickListener(this);
         jiageNewHot.setOnClickListener(this);
