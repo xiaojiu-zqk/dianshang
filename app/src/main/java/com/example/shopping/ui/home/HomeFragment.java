@@ -26,6 +26,7 @@ import com.example.shopping.adapter.shouye.ZhuantiRvAdapter;
 import com.example.shopping.base.BaseAdapter;
 import com.example.shopping.base.BaseFragment;
 import com.example.shopping.details.BrandListActivity;
+import com.example.shopping.details.NewHotActivity;
 import com.example.shopping.details.PinpaiDetailsActivity;
 import com.example.shopping.interfaces.shangcheng.ShouyeContract;
 import com.example.shopping.models.bean.ShouYeBean;
@@ -81,7 +82,7 @@ public class HomeFragment extends BaseFragment<ShouyeContract.Persenter> impleme
     private ArrayList<ShouYeBean.DataBean.TopicListBean> topicListBeans;
     private ArrayList<ShouYeBean.DataBean.CategoryListBean.GoodsListBean> goodsListBeans;
     private JujiaRvAdapter jujiaRvAdapter;
-    private int id;
+
     private static final String TAG = "HomeFragment";
 
     @Override
@@ -176,10 +177,10 @@ public class HomeFragment extends BaseFragment<ShouyeContract.Persenter> impleme
             public void itemClick(int position, BaseAdapter.BaseViewHolder holder) {
                 Intent intent = new Intent(context, PinpaiDetailsActivity.class);
                 ShouYeBean.DataBean.BrandListBean brandListBean = brandListBeans.get(position);
-                id = brandListBean.getId();
+                int id = brandListBean.getId();
                 intent.putExtra("id", id);
                 startActivity(intent);
-                Log.i(TAG, "itemClick: "+id);
+//                Log.i(TAG, "itemClick: "+id);
             }
         });
     }
@@ -267,12 +268,20 @@ public class HomeFragment extends BaseFragment<ShouyeContract.Persenter> impleme
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.tv1_shouye:
-                Intent intent = new Intent(context, BrandListActivity.class);
-                startActivity(intent);
+                Intent intent1 = new Intent(context, BrandListActivity.class);
+                startActivity(intent1);
                 break;
             case R.id.tv2_shouye:
+                int tag = 1;
+                Intent intent = new Intent(context, NewHotActivity.class);
+                intent.putExtra("tag",tag);
+                startActivity(intent);
                 break;
             case R.id.tv3_shouye:
+                int tag1 = 2;
+                Intent intent3 = new Intent(context, NewHotActivity.class);
+                intent3.putExtra("tag",tag1);
+                startActivity(intent3);
                 break;
             case R.id.tv4_shouye:
                 break;

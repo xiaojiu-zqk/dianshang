@@ -2,6 +2,8 @@ package com.example.shopping.common;
 
 
 
+import android.text.TextUtils;
+
 import com.example.shopping.interfaces.IBaseView;
 
 import io.reactivex.subscribers.ResourceSubscriber;
@@ -36,9 +38,9 @@ public abstract class CommonSubscriber<T> extends ResourceSubscriber<T> {
     public void onError(Throwable t) {
         //LoadingUtil.getInstance().hideLoading();
         if(mView == null) return;
-//        if(errorMsg != null && TextUtils.isEmpty(errorMsg)){
+        if(errorMsg != null && TextUtils.isEmpty(errorMsg)){
             mView.showTips(t.toString());
-//        }
+        }
     }
 
     @Override
