@@ -203,6 +203,7 @@ public class NewHotActivity extends BaseActivity<ShouyeContract.NewHotPersenter>
 
             }
         });
+
         zahuo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
