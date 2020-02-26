@@ -3,6 +3,7 @@ package com.example.shopping.details;
 
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,6 +27,8 @@ import com.example.shopping.models.bean.NewDataBean;
 import com.example.shopping.persenter.details.NewHotPersenter;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
 
 import butterknife.BindView;
 
@@ -49,6 +53,8 @@ public class NewHotActivity extends BaseActivity<ShouyeContract.NewHotPersenter>
     private ArrayList<NewDataBean.DataBeanX.DataBean> hotList;
     private NewHotAdapter newAdapter;
     private NewHotAdapter hotAdapter;
+    private List<NewDataBean.DataBeanX.FilterCategoryBean> filterCategory;
+    private List<NewDataBean.DataBeanX.FilterCategoryBean> hotfilterCategory;
 
     @Override
     protected int getLayout() {
@@ -68,7 +74,11 @@ public class NewHotActivity extends BaseActivity<ShouyeContract.NewHotPersenter>
             newAdapter.setOnItemClickHandler(new BaseAdapter.ItemClickHandler() {
                 @Override
                 public void itemClick(int position, BaseAdapter.BaseViewHolder holder) {
+                    NewDataBean.DataBeanX.DataBean dataBean = newList.get(position);
+                    int id = dataBean.getId();
                     Intent intent1 = new Intent(NewHotActivity.this, NewHotDetailActivity.class);
+                    intent1.putExtra("new","新品");
+                    intent1.putExtra("id",id);
                     startActivity(intent1);
                 }
             });
@@ -80,7 +90,12 @@ public class NewHotActivity extends BaseActivity<ShouyeContract.NewHotPersenter>
             hotAdapter.setOnItemClickHandler(new BaseAdapter.ItemClickHandler() {
                 @Override
                 public void itemClick(int position, BaseAdapter.BaseViewHolder holder) {
-
+                    NewDataBean.DataBeanX.DataBean dataBean = hotList.get(position);
+                    int id = dataBean.getId();
+                    Intent intent1 = new Intent(NewHotActivity.this, NewHotDetailActivity.class);
+                    intent1.putExtra("new","人气");
+                    intent1.putExtra("id",id);
+                    startActivity(intent1);
                 }
             });
         }
@@ -113,12 +128,14 @@ public class NewHotActivity extends BaseActivity<ShouyeContract.NewHotPersenter>
 
     @Override
     public void getNewDataReturn(NewDataBean result) {
-            newAdapter.updata(result.getData().getData());
+        newAdapter.updata(result.getData().getData());
+        filterCategory = result.getData().getFilterCategory();
     }
 
     @Override
     public void getHotDataReturn(NewDataBean result) {
-            hotAdapter.updata(result.getData().getData());
+        hotAdapter.updata(result.getData().getData());
+        hotfilterCategory = result.getData().getFilterCategory();
     }
 
     @Override
@@ -164,8 +181,9 @@ public class NewHotActivity extends BaseActivity<ShouyeContract.NewHotPersenter>
         PopupWindow popupWindow = new PopupWindow(inflate, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         popupWindow.setBackgroundDrawable(new ColorDrawable());
         popupWindow.setOutsideTouchable(true);
-        if(!popupWindow.isShowing()){
-            popupWindow.showAsDropDown(fenleiNewHot,0,2);
+        popupWindow.dismiss();
+        if (!popupWindow.isShowing()) {
+            popupWindow.showAsDropDown(fenleiNewHot, 0, 2);
         }
         TextView all = inflate.findViewById(R.id.all_pop);
         TextView jujia = inflate.findViewById(R.id.jujia_pop);
@@ -173,41 +191,90 @@ public class NewHotActivity extends BaseActivity<ShouyeContract.NewHotPersenter>
         TextView yinshi = inflate.findViewById(R.id.yinshi_pop);
         TextView canchu = inflate.findViewById(R.id.canchu_pop);
         TextView zahuo = inflate.findViewById(R.id.zahuo_pop);
+        if (tag == 1) {
+            all.setText(filterCategory.get(0).getName());
+            jujia.setText(filterCategory.get(1).getName());
+            canchu.setText(filterCategory.get(2).getName());
+            yingtong.setText(filterCategory.get(3).getName());
+            zahuo.setText(filterCategory.get(4).getName());
+            yinshi.setText(filterCategory.get(5).getName());
+            yinshi.setBackgroundResource(R.drawable.minebian);
+            yinshi.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    SORT = "category";
+                    persenter.getNewData(1, 1, 100, ORDER, SORT, filterCategory.get(5).getId());
+
+                }
+            });
+        } else {
+            all.setText(hotfilterCategory.get(0).getName());
+            jujia.setText(hotfilterCategory.get(1).getName());
+            canchu.setText(hotfilterCategory.get(2).getName());
+            yingtong.setText(hotfilterCategory.get(3).getName());
+            zahuo.setText(hotfilterCategory.get(4).getName());
+            yinshi.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorBai));
+        }
         all.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                if (tag == 1) {
+                    SORT = "category";
+                    persenter.getNewData(1, 1, 100, ORDER, SORT, 0);
+                } else {
+                    SORT = "category";
+                    persenter.getHotData(1, 1, 100, ORDER, SORT, 0);
+                }
             }
         });
         jujia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                if (tag == 1) {
+                    SORT = "category";
+                    persenter.getNewData(1, 1, 100, ORDER, SORT, filterCategory.get(1).getId());
+                } else {
+                    SORT = "category";
+                    persenter.getHotData(1, 1, 100, ORDER, SORT, hotfilterCategory.get(1).getId());
+                }
             }
         });
         yingtong.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                if (tag == 1) {
+                    SORT = "category";
+                    persenter.getNewData(1, 1, 100, ORDER, SORT, filterCategory.get(3).getId());
+                } else {
+                    SORT = "category";
+                    persenter.getHotData(1, 1, 100, ORDER, SORT, hotfilterCategory.get(3).getId());
+                }
             }
         });
-        yinshi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-            }
-        });
         canchu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                if (tag == 1) {
+                    SORT = "category";
+                    persenter.getNewData(1, 1, 100, ORDER, SORT, filterCategory.get(2).getId());
+                } else {
+                    SORT = "category";
+                    persenter.getHotData(1, 1, 100, ORDER, SORT, hotfilterCategory.get(2).getId());
+                }
             }
         });
 
         zahuo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                if (tag == 1) {
+                    SORT = "category";
+                    persenter.getNewData(1, 1, 100, ORDER, SORT, filterCategory.get(4).getId());
+                } else {
+                    SORT = "category";
+                    persenter.getHotData(1, 1, 100, ORDER, SORT, hotfilterCategory.get(4).getId());
+                }
             }
         });
 
