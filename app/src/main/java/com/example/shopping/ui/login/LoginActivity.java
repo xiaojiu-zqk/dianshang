@@ -32,6 +32,8 @@ public class LoginActivity extends BaseActivity<LoginContract.Persenter> impleme
     TextView zuceLogin;
     @BindView(R.id.btn_login)
     Button btnLogin;
+    private String name;
+    private String password;
 
     @Override
     protected int getLayout() {
@@ -47,7 +49,14 @@ public class LoginActivity extends BaseActivity<LoginContract.Persenter> impleme
                 startActivityForResult(intent,100);
             }
         });
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                persenter.login(name,password);
+            }
+        });
     }
+
 
     @Override
     protected void initData() {
@@ -70,9 +79,8 @@ public class LoginActivity extends BaseActivity<LoginContract.Persenter> impleme
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 100 && resultCode == 200){
-            String name = data.getStringExtra("name");
-            String password = data.getStringExtra("password");
-            persenter.login(name,password);
+            name = data.getStringExtra("name");
+            password = data.getStringExtra("password");
         }
     }
 }
