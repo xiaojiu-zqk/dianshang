@@ -9,6 +9,7 @@ import com.example.shopping.models.api.CategroylistApi;
 import com.example.shopping.models.api.PinpaiApi;
 import com.example.shopping.models.api.ShouyeApi;
 import com.example.shopping.models.api.WanApi;
+import com.example.shopping.utils.SharedPreferencesUtil;
 import com.example.shopping.utils.SystemUtils;
 
 import java.io.File;
@@ -171,6 +172,8 @@ public class HttpManager {
         public Response intercept(Chain chain) throws IOException {
             Request request = chain.request().newBuilder()
                     .addHeader("Connection","keep-alive")
+                    .addHeader("Client-Type","ANDROID")
+                    .addHeader("X-Nideshop-Token", SharedPreferencesUtil.getInstance().getString("token"))
                     .build();
             return chain.proceed(request);
         }

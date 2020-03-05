@@ -6,6 +6,7 @@ import com.example.shopping.models.bean.BrandListBean;
 import com.example.shopping.models.bean.BrandListDetailBean;
 import com.example.shopping.models.bean.BrandTopImgBean;
 import com.example.shopping.models.bean.BuyBean;
+import com.example.shopping.models.bean.CardListBean;
 import com.example.shopping.models.bean.GoodsDetailBean;
 import com.example.shopping.models.bean.GoodsRelatedbean;
 import com.example.shopping.models.bean.NewDataBean;
@@ -16,6 +17,7 @@ import com.example.shopping.models.bean.ZhuantiBean;
 
 import io.reactivex.Flowable;
 import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
@@ -62,9 +64,15 @@ public interface ShouyeApi {
 
     //登录
     @POST("api/auth/login")
+    @FormUrlEncoded
     Flowable<UserBean> login(@Field("nickname") String nickname, @Field("password") String password);
 
     //注册
     @POST("api/auth/register")
+    @FormUrlEncoded
     Flowable<RegisterBean> register(@Field("nickname") String nickname, @Field("password") String password);
+
+    //获取购物车数据
+    @GET("api/cart/index")
+    Flowable<CardListBean> getCardList();
 }
