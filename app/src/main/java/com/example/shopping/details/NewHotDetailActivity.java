@@ -3,9 +3,17 @@ package com.example.shopping.details;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.WebView;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -20,6 +28,7 @@ import com.example.shopping.base.BaseActivity;
 import com.example.shopping.interfaces.shangcheng.details.BuyDetailContract;
 import com.example.shopping.models.bean.BuyBean;
 import com.example.shopping.models.bean.GoodsRelatedbean;
+import com.example.shopping.models.bean.NewHotCardListBean;
 import com.example.shopping.persenter.details.BuyPersenter;
 import com.youth.banner.Banner;
 import com.youth.banner.loader.ImageLoader;
@@ -69,12 +78,22 @@ public class NewHotDetailActivity extends BaseActivity<BuyDetailContract.Persent
     RecyclerView listRvNewTopDetail;
     @BindView(R.id.banner_new_hot_detail)
     Banner bannerNewHotDetail;
+    @BindView(R.id.shop_new_top_detail)
+    ImageView shopNewTopDetail;
+    @BindView(R.id.lijisjop_new_top_detail)
+    TextView lijisjopNewTopDetail;
+    @BindView(R.id.add_new_hot_detail)
+    TextView addNewHotDetail;
+    @BindView(R.id.ll2)
+    LinearLayout ll2;
     private String aNew;
     private int id;
+    private int num;
     private ArrayList<BuyBean.DataBeanX.IssueBean> issueBeans;
     private BuyWentiAdapter wentiAdapter;
     private BuyListRvAdapter buyListRvAdapter;
     private ArrayList<GoodsRelatedbean.DataBean.GoodsListBean> goodsListBeans;
+    private int productId;
 
     @Override
     protected int getLayout() {
@@ -104,6 +123,48 @@ public class NewHotDetailActivity extends BaseActivity<BuyDetailContract.Persent
         goodsListBeans = new ArrayList<>();
         buyListRvAdapter = new BuyListRvAdapter(goodsListBeans, this);
         listRvNewTopDetail.setAdapter(buyListRvAdapter);
+        shu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pop();
+            }
+        });
+        addNewHotDetail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+            persenter.getCardList(id,num,productId);
+            }
+        });
+    }
+
+    private void pop() {
+        num = 1;
+        View inflate = LayoutInflater.from(this).inflate(R.layout.pop_newhotdetail, null);
+        PopupWindow popupWindow = new PopupWindow(inflate, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        popupWindow.setBackgroundDrawable(new ColorDrawable());
+        popupWindow.setOutsideTouchable(true);
+        if (!popupWindow.isShowing()) {
+            popupWindow.showAtLocation(ll2, Gravity.TOP, 0, 0);
+        }
+        Button add = inflate.findViewById(R.id.add_newhot_detail_pop);
+        Button jian = inflate.findViewById(R.id.jian_new_hot_detail_pop);
+        TextView number = inflate.findViewById(R.id.number_newhot_detail_pop);
+        jian.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (num>1){
+                    num--;
+                    number.setText(num+"");
+                }
+            }
+        });
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                num++;
+                number.setText(num+"");
+            }
+        });
     }
 
     @Override
@@ -128,20 +189,27 @@ public class NewHotDetailActivity extends BaseActivity<BuyDetailContract.Persent
             String img_url = galleryBean.getImg_url();
             strings.add(img_url);
         }
-        setbanner(bannerNewHotDetail,strings);
+        setbanner(bannerNewHotDetail, strings);
         BuyBean.DataBeanX.InfoBean info = result.getData().getInfo();
-        setTextViewValues(info.getName(),info.getGoods_brief(),info.getRetail_price()+"");
+        setTextViewValues(info.getName(), info.getGoods_brief(), info.getRetail_price() + "");
+        List<BuyBean.DataBeanX.ProductListBean> productList = result.getData().getProductList();
+        productId = productList.get(0).getId();
     }
 
     private void setTextViewValues(String name, String goods_brief, String retail_price) {
         nameNewHotDetail.setText(name);
         briefNewHotDetail.setText(goods_brief);
-        priceNewHotDetail.setText("￥"+retail_price);
+        priceNewHotDetail.setText("￥" + retail_price);
     }
 
     @Override
     public void getGoodsRelatedReturn(GoodsRelatedbean result) {
         buyListRvAdapter.updata(result.getData().getGoodsList());
+    }
+
+    @Override
+    public void getCardListReturn(NewHotCardListBean resilt) {
+
     }
 
     private static void setbanner(Banner bannerShouye, ArrayList<String> strings) {
@@ -154,4 +222,10 @@ public class NewHotDetailActivity extends BaseActivity<BuyDetailContract.Persent
                 }).start();
     }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
 }

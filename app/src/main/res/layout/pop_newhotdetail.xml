@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/img_new_hot_detail_pop"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginLeft="3dp"
+        android:layout_marginTop="40dp"
+        android:text="价格:"
+        android:textSize="18sp"
+        app:layout_constraintLeft_toRightOf="@id/img_new_hot_detail_pop"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/price_newhot_detail_pop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="20"
+        android:textSize="18sp"
+        app:layout_constraintLeft_toRightOf="@id/price"
+        app:layout_constraintTop_toTopOf="@id/price" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:text="已选择：请选择商品规格"
+        app:layout_constraintLeft_toRightOf="@id/img_new_hot_detail_pop"
+        app:layout_constraintTop_toBottomOf="@id/price" />
+
+    <TextView
+        android:id="@+id/shu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="数量"
+        android:textSize="16sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/img_new_hot_detail_pop" />
+   <LinearLayout
+       app:layout_constraintTop_toBottomOf="@id/shu"
+       android:layout_marginLeft="10dp"
+       android:padding="3dp"
+       android:layout_marginTop="10dp"
+       app:layout_constraintLeft_toLeftOf="parent"
+       android:orientation="horizontal"
+       android:layout_width="wrap_content"
+       android:layout_height="40dp">
+       <Button
+           android:id="@+id/jian_new_hot_detail_pop"
+           android:background="@drawable/minebian"
+           android:layout_width="60dp"
+           android:text="-"
+           android:textSize="18sp"
+           android:layout_height="match_parent"/>
+
+       <TextView
+           android:id="@+id/number_newhot_detail_pop"
+           android:layout_width="50dp"
+           android:text="1"
+           android:textSize="18sp"
+           android:gravity="center"
+           android:layout_height="match_parent" />
+       <Button
+           android:textSize="18sp"
+           android:id="@+id/add_newhot_detail_pop"
+           android:background="@drawable/minebian"
+           android:text="+"
+           android:layout_width="60dp"
+           android:layout_height="match_parent"/>
+
+   </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,6 +10,7 @@ import com.example.shopping.models.bean.CardListBean;
 import com.example.shopping.models.bean.GoodsDetailBean;
 import com.example.shopping.models.bean.GoodsRelatedbean;
 import com.example.shopping.models.bean.NewDataBean;
+import com.example.shopping.models.bean.NewHotCardListBean;
 import com.example.shopping.models.bean.RegisterBean;
 import com.example.shopping.models.bean.ShouYeBean;
 import com.example.shopping.models.bean.UserBean;
@@ -75,4 +76,9 @@ public interface ShouyeApi {
     //获取购物车数据
     @GET("api/cart/index")
     Flowable<CardListBean> getCardList();
+
+    //添加到购物车
+    @POST("api/cart/add")
+    @FormUrlEncoded
+    Flowable<NewHotCardListBean> cardList(@Field("goodsId") int  goodsId, @Field("number") int number,@Field("productId") int productId);
 }
