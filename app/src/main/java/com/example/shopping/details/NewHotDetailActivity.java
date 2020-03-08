@@ -94,6 +94,8 @@ public class NewHotDetailActivity extends BaseActivity<BuyDetailContract.Persent
     private BuyListRvAdapter buyListRvAdapter;
     private ArrayList<GoodsRelatedbean.DataBean.GoodsListBean> goodsListBeans;
     private int productId;
+    private String retail_price;
+    private String list_pic_url;
 
     @Override
     protected int getLayout() {
@@ -144,11 +146,15 @@ public class NewHotDetailActivity extends BaseActivity<BuyDetailContract.Persent
         popupWindow.setBackgroundDrawable(new ColorDrawable());
         popupWindow.setOutsideTouchable(true);
         if (!popupWindow.isShowing()) {
-            popupWindow.showAtLocation(ll2, Gravity.TOP, 0, 0);
+            popupWindow.showAtLocation(addNewHotDetail, Gravity.BOTTOM, 0, 80);
         }
         Button add = inflate.findViewById(R.id.add_newhot_detail_pop);
         Button jian = inflate.findViewById(R.id.jian_new_hot_detail_pop);
         TextView number = inflate.findViewById(R.id.number_newhot_detail_pop);
+        ImageView img = inflate.findViewById(R.id.img_new_hot_detail_pop);
+        TextView price = inflate.findViewById(R.id.price_newhot_detail_pop);
+        Glide.with(this).load(list_pic_url).into(img);
+        price.setText(retail_price);
         jian.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -191,6 +197,8 @@ public class NewHotDetailActivity extends BaseActivity<BuyDetailContract.Persent
         }
         setbanner(bannerNewHotDetail, strings);
         BuyBean.DataBeanX.InfoBean info = result.getData().getInfo();
+        list_pic_url = info.getList_pic_url();
+        retail_price = info.getRetail_price();
         setTextViewValues(info.getName(), info.getGoods_brief(), info.getRetail_price() + "");
         List<BuyBean.DataBeanX.ProductListBean> productList = result.getData().getProductList();
         productId = productList.get(0).getId();
@@ -220,12 +228,5 @@ public class NewHotDetailActivity extends BaseActivity<BuyDetailContract.Persent
                         Glide.with(context).load(path).into(imageView);
                     }
                 }).start();
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
     }
 }
