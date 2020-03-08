@@ -7,6 +7,7 @@ import com.example.shopping.models.HttpManager;
 import com.example.shopping.models.bean.BrandTopImgBean;
 import com.example.shopping.models.bean.BuyBean;
 import com.example.shopping.models.bean.GoodsRelatedbean;
+import com.example.shopping.models.bean.NewHotCardListBean;
 import com.example.shopping.utils.RxUtils;
 
 public class BuyPersenter extends BasePersenter<BuyDetailContract.View> implements BuyDetailContract.Persenter {
@@ -30,6 +31,18 @@ public class BuyPersenter extends BasePersenter<BuyDetailContract.View> implemen
                     @Override
                     public void onNext(GoodsRelatedbean result) {
                         mView.getGoodsRelatedReturn(result);
+                    }
+                }));
+    }
+
+    @Override
+    public void getCardList(int id, int number, int productId) {
+        addSubscribe(HttpManager.getShouyeApi().cardList(id,number,productId)
+                .compose(RxUtils.<NewHotCardListBean> rxScheduler())
+                .subscribeWith(new CommonSubscriber<NewHotCardListBean>(mView){
+                    @Override
+                    public void onNext(NewHotCardListBean result) {
+                        mView.getCardListReturn(result);
                     }
                 }));
     }
